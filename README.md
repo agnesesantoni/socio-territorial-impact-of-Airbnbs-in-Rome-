@@ -97,7 +97,7 @@ All variables are counted per municipio, which is the administrative division of
 The design follows Lazarsfeld's process of turning a complex concept into measurable indicators.
 
 1. **Define the construct and its dimensions** (territory, housing, exclusion of residents).
-2. **Build indicators** as density or coexistence ratios and assign each a polarity.Such indicators where built on an excel worksheet for each dimension.
+2. **Build indicators** as density or coexistence ratios and assign each a polarity.Such indicators where built on an excel worksheet for each dimension and are contained inside the indicator matrices folder .
 3. **Check correlations** (Pearson) within each dimension to guide the choice of measurement model. Correlations were mostly low, so a **formative model** was used: indicators capture different parts of the concept rather than being interchangeable.
 4. **Standardize** with **min-max scaling**. This gives unitless values between 0 and 1 and keeps the relative distances between districts. It was preferred to rank normalization (flattens differences) and z-scores (negative values, harder to read).
 5. **Aggregate within each dimension** with the **arithmetic mean** (compensatory).
