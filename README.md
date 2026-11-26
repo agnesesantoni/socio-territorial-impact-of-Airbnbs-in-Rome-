@@ -90,7 +90,7 @@ All variables are counted per municipio, which is the administrative division of
 | 3. Exclusion | Care services | Health and care businesses / population | - |
 | 3. Exclusion | Decorum | Homeless residents / population | - |
 
-*Polarity:* "+" means a higher value indicates more touristification impact; "-" means a higher value indicates less. Negative-polarity indicators are inverted during normalization.
+*Polarity:* "+" means a higher value indicates more touristification impact; "-" means a higher value indicates less. Negative-polarity indicators are inverted during standardization.
 
 ## Methodology
 
