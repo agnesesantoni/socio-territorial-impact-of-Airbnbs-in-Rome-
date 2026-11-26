@@ -4,24 +4,8 @@
 
 > Building a multidimensional composite indicator in R to measure how strongly short-term rentals affect each district of Rome (2025).
 
-**Author:** Agnese Santoni | **Course:** Social Statistics | **Date:** June 2026
-**Language:** R | **Method:** Composite indicators (min-max normalization, arithmetic + geometric aggregation)
 
----
 
-## Table of Contents
-
-1. [Problem Statement](#problem-statement)
-2. [Project at a Glance](#project-at-a-glance)
-3. [Data](#data)
-4. [Variables and Indicators](#variables-and-indicators)
-5. [Methodology](#methodology)
-6. [Results](#results)
-7. [Reproducing the Analysis](#reproducing-the-analysis)
-8. [Limitations](#limitations)
-9. [Possible Next Steps](#possible-next-steps)
-
----
 
 ## Problem Statement
 
@@ -47,7 +31,7 @@ Rome is a strong case study. It is one of the world's top tourist destinations, 
 | **Indicators** | 11 ratios built from 12+ raw variables |
 | **Normalization** | Min-max (0 to 1) with polarity adjustment |
 | **Aggregation** | Arithmetic mean within dimensions, geometric mean across dimensions |
-| **Tools** | R (`Compind`, `corrplot`), LaTeX |
+| **Tools** | R (`Compind`, `corrplot`)|
 
 ### Pipeline
 
@@ -68,7 +52,7 @@ Composite index  <-  Geometric mean  <-  Dimension indices  <-  Arithmetic mean
 
 ## Variables and Indicators
 
-All variables are counted per municipio.
+All variables are counted per municipio, which is the administrative division of the city.
 
 **Raw variables**
 
@@ -115,9 +99,9 @@ The design follows Lazarsfeld's process of turning a complex concept into measur
 1. **Define the construct and its dimensions** (territory, housing, exclusion of residents).
 2. **Build indicators** as density or coexistence ratios and assign each a polarity.
 3. **Check correlations** (Pearson) within each dimension to guide the choice of measurement model. Correlations were mostly low, so a **formative model** was used: indicators capture different parts of the concept rather than being interchangeable.
-4. **Normalize** with **min-max scaling**. This gives unitless values between 0 and 1 and keeps the relative distances between districts. It was preferred to rank normalization (flattens differences) and z-scores (negative values, harder to read).
-5. **Aggregate within each dimension** with the **arithmetic mean** (compensatory: a high indicator can offset a low one).
-6. **Aggregate across dimensions** with the **geometric mean** (non-compensatory: the dimensions complement each other and cannot substitute for one another).
+4. **Standardize** with **min-max scaling**. This gives unitless values between 0 and 1 and keeps the relative distances between districts. It was preferred to rank normalization (flattens differences) and z-scores (negative values, harder to read).
+5. **Aggregate within each dimension** with the **arithmetic mean** (compensatory).
+6. **Aggregate across dimensions** with the **geometric mean** (non-compensatory).
 
 ### Diagnostics
 
@@ -151,16 +135,13 @@ The design follows Lazarsfeld's process of turning a complex concept into measur
 
 ### Key findings
 
-1. **It is not just a city-centre problem.** The most affected district is semi-central Appia Antica (VIII), followed by Monteverde (XII). The historic centre ranks third.
-2. **The centre is asymmetric.** Centro Storico (I) has by far the highest territorial impact (0.591) but the lowest exclusion score (0.333), which pulls its composite down. This is the effect of the geometric mean.
+1. **This is not only a city centre problem.** The most affected district is semi-central Appia Antica (VIII), followed by Monteverde (XII). The historic centre ranks third.
+2. **The centre is asymmetric.** Centro Storico (I) has by far the highest territorial impact (0.591) but the lowest exclusion score (0.333), which pulls its composite down. 
 3. **Parioli/Nomentano (II)** combines the highest housing (0.803) and exclusion (0.856) scores with low impact on the territory.
-4. **Semi-central and eastern districts** (V, VII, VIII, XII) show Airbnb replacing hotels, with a high share of professional hosts. These areas are in transition.
-5. **The peripheries** (IV, VI) score lowest, partly because of more public housing and less tourism. This does not mean they are doing well, as they still show gaps in services.
+4. **Semi-central and eastern districts** (V, VII, VIII, XII) show Airbnb replacing hotels, with a high share of professional hosts. These areas are in transition and the phenomena is professionalising itself.
+5. **The outskirts** (IV, VI) score lowest, partly because of more public housing and less tourism. This does not mean they are doing well, as they still show gaps in services.
 6. **Housing and exclusion scores are high almost everywhere**, pointing to a city-wide problem of young people leaving neighbourhoods and a lack of care services for residents.
 
-### Policy takeaway
-
-Regulating short-term rentals is not enough. Rome also needs better welfare services for residents, more public housing, and a balance between tourist appeal and quality of life.
 
 ## Reproducing the Analysis
 
@@ -175,7 +156,7 @@ install.packages(c("corrplot", "Compind"))
 
 ### Input
 
-The script expects three data frames of ready-made indicators, one per dimension, with municipi as rows and the first column holding the municipio names. Building the ratios from the raw data is not included in the script.
+The script expects three data frames of ready-made indicators, one per dimension, with municipi (administrative disctricts) as rows and the first column holding the municipio names. Building the ratios from the raw data is not included in the script, this was done on excel before uploading it to R.
 
 ### Core code
 
@@ -208,7 +189,7 @@ indicatore_unico <- apply(datasetunico, 1, media_geom)
 | 2. Housing | POS, NEG, NEG, NEG |
 | 3. Exclusion | NEG, NEG, NEG |
 
-**Note:** the geometric mean returns 0 if any dimension index is exactly 0. This does not happen here, but it matters if the script is reused with other data.
+
 
 
 ## Limitations
