@@ -143,52 +143,6 @@ The design follows Lazarsfeld's process of turning a complex concept into measur
 6. **Housing and exclusion scores are high almost everywhere**, pointing to a city-wide problem of young people leaving neighbourhoods and a lack of care services for residents.
 
 
-## Reproducing the Analysis
-
-### Requirements
-
-- R (4.x recommended)
-- Packages: `corrplot`, `Compind`
-
-```r
-install.packages(c("corrplot", "Compind"))
-```
-
-### Input
-
-The script expects three data frames of ready-made indicators, one per dimension, with municipi (administrative disctricts) as rows and the first column holding the municipio names. Building the ratios from the raw data is not included in the script, this was done on excel before uploading it to R.
-
-### Core code
-
-```r
-library(corrplot)
-library(Compind)
-
-# 1. Correlation matrix (example: dimension 1)
-cor_dim1 <- round(cor(INDICATORI_PRIMA_DIMENSIONE_, method = "pearson"), 2)
-corrplot(cor_dim1, method = "number", type = "lower", diag = FALSE,
-         tl.col = "black", col = "darkred")
-
-# 2. Min-max normalization with polarity (example: dimension 2)
-stand_dim2 <- normalise_ci(INDICATORI_SECONDA_DIMENSIONE_, indic_col = 1:4,
-                           polarity = c("POS", "NEG", "NEG", "NEG"), method = 2)
-
-# 3. Dimension index = arithmetic mean of normalized indicators
-indice_dim2 <- apply(stand_dim2$ci_norm, 1, mean)
-
-# 4. Composite index = geometric mean of the three dimension indices
-media_geom <- function(x) exp(mean(log(x)))
-indicatore_unico <- apply(datasetunico, 1, media_geom)
-```
-
-**Polarity settings used**
-
-| Dimension | Polarity (column order) |
-|---|---|
-| 1. Territory | POS, POS, POS, POS |
-| 2. Housing | POS, NEG, NEG, NEG |
-| 3. Exclusion | NEG, NEG, NEG |
-
 
 
 
