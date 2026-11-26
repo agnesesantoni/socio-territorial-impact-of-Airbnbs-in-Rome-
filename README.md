@@ -210,19 +210,6 @@ indicatore_unico <- apply(datasetunico, 1, media_geom)
 
 **Note:** the geometric mean returns 0 if any dimension index is exactly 0. This does not happen here, but it matters if the script is reused with other data.
 
-### Suggested repository layout
-
-```
-.
-├── README.md
-├── data/
-│   ├── raw/            # Inside Airbnb, yearbook, ISTAT, Mapparoma
-│   └── processed/      # indicator tables per dimension
-├── scripts/
-│   └── composite_index.R
-├── figures/            # correlation plots
-└── report/             # full paper (PDF, Italian)
-```
 
 ## Limitations
 
@@ -233,12 +220,3 @@ indicatore_unico <- apply(datasetunico, 1, media_geom)
 - **Jubilee year:** the 2025 Jubilee may have inflated some measures, but it is not analysed separately.
 - **Indicator overlap:** density and carrying capacity are almost perfectly correlated (r = 0.99), so territorial impact is effectively counted twice.
 
-## Possible Next Steps
-
-- Repeat the analysis at a finer scale (urban zones or neighbourhoods).
-- Test how sensitive the ranking is to the choice of normalization, weights and aggregation method.
-- Update the public housing data and extend the analysis over several years to see trends.
-
----
-
-*AI was used only for LaTeX table code, figure insertion and bibliography formatting. The full report (in Italian) contains the theoretical framework and references.*
