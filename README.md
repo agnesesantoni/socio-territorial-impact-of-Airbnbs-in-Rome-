@@ -2,34 +2,34 @@
 
 # Airbnb Touristification in Rome: A Composite Index Across the 15 Municipi
 
-> Building a multidimensional composite indicator in R to measure how strongly short-term rentals affect each district of Rome (2025).
+> Building a multidimensional composite indicator in R to measure how strongly short-term Airbnb rentals affect each district of Rome (2025).
 
 
 
 
-## Problem Statement
+## Problem Statement: What is airbnbification?
 
 Airbnb and other short-term rentals can reshape cities. They can:
 
-- put pressure on the housing market and make it harder for residents to find homes
-- replace local shops with businesses aimed at tourists
-- push out groups that don't fit the "tourist city" image, such as young people and the homeless
+- put pressure on the housing market and make it harder for residents to find homes, as houses that were once destined for residents are now for tourists
+- replace local shops with businesses aimed at tourists, such as lockers, souvenir stores, chain restaurants  
+- push out marginalised groups, such as young people and the homeless, to mantain decorum and make the city appealing to tourists  
 
-Rome is a strong case study. It is one of the world's top tourist destinations, had about **37,650 active Airbnb listings** in September 2025, and recorded more than **22.9 million tourist stays** in 2025 (a Jubilee year).
+Rome is a strong case study. It is one of the world's top tourist destinations, it had about **37,650 active Airbnb listings** in September 2025, and recorded more than **22.9 million tourist stays** in 2025. 2025 is a particular year, since the city hosted the Jubilee, seeing a rise in tourist presence: this project takes this into consideration, but only as a reference, it does not have the intent to analyse how the Jubilee shaped Airbnbification in Rome.
 
-**Research question:** How strongly does Airbnb-driven touristification affect each of Rome's 15 municipi, and how do the districts differ?
+**Research question:** How strongly does Airbnb-driven touristification affect each of Rome's 15 'municipi', and how do the districts differ? Which districts are the most affected? 
 
-**Approach:** Touristification is a complex, multidimensional concept, so no single variable can measure it. This project turns it into a **composite index** built from three dimensions and 11 indicators.
+**Approach:** Airbnbfication is a complex, multidimensional concept: because of this, I have decided to adopt a multi indicator approach. This project turns Airbnbifcation into a **composite index** built from three dimensions and 11 indicators.
 
 ## Project at a Glance
 
 | | |
 |---|---|
-| **Unit of analysis** | 15 municipi of Rome |
+| **Unit of analysis** | 15 municipi (districts) of Rome |
 | **Time reference** | 2025 (Airbnb data: Sept 2025; official statistics: Dec 2024) |
-| **Dimensions** | 3 (territory, housing, exclusion of residents) |
+| **Dimensions** | 3 (territory, housing, exclusion of residents/decorum) |
 | **Indicators** | 11 ratios built from 12+ raw variables |
-| **Normalization** | Min-max (0 to 1) with polarity adjustment |
+| **Normalization** | Min-max (0 to 1) |
 | **Aggregation** | Arithmetic mean within dimensions, geometric mean across dimensions |
 | **Tools** | R (`Compind`, `corrplot`)|
 
@@ -96,12 +96,12 @@ All variables are counted per municipio, which is the administrative division of
 
 The design follows Lazarsfeld's process of turning a complex concept into measurable indicators.
 
-1. **Define the construct and its dimensions** (territory, housing, exclusion of residents).
+1. **Define the construct and its dimensions** (territory, housing, exclusion of residents/decorum).
 2. **Build indicators** as density or coexistence ratios and assign each a polarity.Such indicators where built on an excel worksheet for each dimension and are contained inside the indicator matrices folder .
 3. **Check correlations** (Pearson) within each dimension to guide the choice of measurement model. Correlations were mostly low, so a **formative model** was used: indicators capture different parts of the concept rather than being interchangeable.
-4. **Standardize** with **min-max scaling**. This gives unitless values between 0 and 1 and keeps the relative distances between districts. It was preferred to rank normalization (flattens differences) and z-scores (negative values, harder to read).
-5. **Aggregate within each dimension** with the **arithmetic mean** (compensatory).
-6. **Aggregate across dimensions** with the **geometric mean** (non-compensatory).
+4. **Standardize** with **min-max scaling**. This gives unitless values between 0 and 1 and keeps the relative distances between districts. It was preferred to rank normalization (flattens differences) and z-scores (negative values, harder to read), as it already gives a form of ranking.
+5. **Aggregate within each dimension** with the **arithmetic mean** (compensatory approach).
+6. **Aggregate across dimensions** with the **geometric mean** (non-compensatory approach).
 
 ### Diagnostics
 
@@ -109,7 +109,7 @@ The design follows Lazarsfeld's process of turning a complex concept into measur
 |---|---|---|
 | 1. Territory | Density and carrying capacity: r = 0.99. All other pairs are low (up to -0.49). | Both kept, since they measure different things (spatial concentration vs. pressure on residents). |
 | 2. Housing | All correlations low to moderate (highest: 0.57 between public housing and youth share). | Formative model. |
-| 3. Exclusion | Care services and decorum: r = 0.97. Commercial gentrification is negatively correlated with both (-0.77, -0.62). | Treated as formative, since internal coherence is not high enough for a reflective model. |
+| 3. Exclusion/decorum | Care services and decorum: r = 0.97. Commercial gentrification is negatively correlated with both (-0.77, -0.62). | Treated as formative, since internal coherence is not high enough for a reflective model. |
 
 ## Results
 
